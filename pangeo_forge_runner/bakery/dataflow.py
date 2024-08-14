@@ -70,14 +70,23 @@ class DataflowBakery(Bakery):
         """,
     )
 
+    use_shuffle = Bool(
+        True,
+        config=True,
+        help="""
+        Use
+
+        https://cloud.google.com/dataflow/docs/guides/enable-dataflow-prime has more information
+        on the advantages of dataflow prime.
+        """,
+    )
     use_dataflow_prime = Bool(
         False,
         config=True,
         help="""
-        Use GCP's DataFlow Prime instead of regular DataFlow.
+        Use GCP's DataFlow Shuffle
 
-        https://cloud.google.com/dataflow/docs/guides/enable-dataflow-prime has more information
-        on the advantages of dataflow prime.
+        https://cloud.google.com/dataflow/docs/shuffle-for-batch 
         """,
     )
 
@@ -170,6 +179,9 @@ class DataflowBakery(Bakery):
             raise ValueError("DataflowBakery.project_id must be set")
 
         experiments = ["use_runner_v2"]
+
+        if not self.use_shuffle:
+            experiments += ["shuffle_mode=service"]
 
         if self.use_dataflow_prime:
             # dataflow prime does not support setting machine types explicitly!
