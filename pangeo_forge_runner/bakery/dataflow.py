@@ -206,7 +206,7 @@ class DataflowBakery(Bakery):
             job_name=job_name,
             max_num_workers=self.max_num_workers,
             disk_size_gb=self.disk_size_gb,
-            worker_disk_type="pd-balanced",
+            worker_disk_type="compute.googleapis.com/projects/leap-pangeo/zones/us-central1/diskTypes/pd-ssd",
             temp_location=self.temp_gcs_location,
             use_public_ips=self.use_public_ips,
             region=self.region,
