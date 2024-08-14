@@ -182,7 +182,7 @@ class DataflowBakery(Bakery):
 
         # if not self.use_shuffle:
         # !!!!!!!!!!! tmp setting !!!!!!!!!!!!!!
-        experiments += ["shuffle_mode=service"]
+        experiments += ["shuffle_mode=appliance"]
 
         if self.use_dataflow_prime:
             # dataflow prime does not support setting machine types explicitly!
