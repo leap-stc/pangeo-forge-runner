@@ -71,7 +71,7 @@ class DataflowBakery(Bakery):
     )
 
     use_shuffle = Bool(
-        False,
+        True,
         config=True,
         help="""
         Use
@@ -180,9 +180,8 @@ class DataflowBakery(Bakery):
 
         experiments = ["use_runner_v2"]
 
-        # if not self.use_shuffle:
-        # !!!!!!!!!!! tmp setting !!!!!!!!!!!!!!
-        experiments += ["shuffle_mode=appliance"]
+        if self.use_shuffle:  # if True
+            experiments += ["shuffle_mode=appliance"]
 
         if self.use_dataflow_prime:
             # dataflow prime does not support setting machine types explicitly!
@@ -207,7 +206,7 @@ class DataflowBakery(Bakery):
             job_name=job_name,
             max_num_workers=self.max_num_workers,
             disk_size_gb=self.disk_size_gb,
-            worker_disk_type = 'pd-balanced'
+            worker_disk_type="pd-balanced",
             temp_location=self.temp_gcs_location,
             use_public_ips=self.use_public_ips,
             region=self.region,
