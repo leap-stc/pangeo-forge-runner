@@ -71,7 +71,7 @@ class DataflowBakery(Bakery):
     )
 
     use_shuffle = Bool(
-        True,
+        False,
         config=True,
         help="""
         Use
@@ -120,6 +120,16 @@ class DataflowBakery(Bakery):
         Maximum number of workers this job can be autoscaled to.
 
         Set to None (default) for no limit.
+        """,
+    )
+
+    num_workers = Integer(
+        None,
+        allow_none=True,
+        config=True,
+        help="""
+        Initial number of workers
+
         """,
     )
 
@@ -204,6 +214,7 @@ class DataflowBakery(Bakery):
             runner="DataflowRunner",
             project=self.project_id,
             job_name=job_name,
+            num_workers=self.num_workers,
             max_num_workers=self.max_num_workers,
             disk_size_gb=self.disk_size_gb,
             worker_disk_type="compute.googleapis.com/projects/leap-pangeo/zones/us-central1/diskTypes/pd-ssd",
