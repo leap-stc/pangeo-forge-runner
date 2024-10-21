@@ -58,6 +58,14 @@ class DataflowBakery(Bakery):
         """,
     )
 
+    autoscaling_algorithm = Unicode(
+        "THROUGHPUT_BASED",
+        config=True,
+        help="""
+        Autoscaling algorithm. Options are THROUGHPUT_BASED or None
+        """,
+    )
+
     disk_size_gb = Integer(
         None,
         allow_none=True,
@@ -112,6 +120,17 @@ class DataflowBakery(Bakery):
         """,
     )
 
+    temp_gcs_location = Unicode(
+        None,
+        allow_none=True,
+        config=True,
+        help="""
+        GCS URL under which to put temporary files required to launch dataflow jobs
+
+        *Must* be set, and be a gs:// URL.
+        """,
+    )
+    
     max_num_workers = Integer(
         None,
         allow_none=True,
@@ -216,6 +235,7 @@ class DataflowBakery(Bakery):
             job_name=job_name,
             num_workers=self.num_workers,
             max_num_workers=self.max_num_workers,
+            autoscaling_algorithm=self.autoscaling_algorithm,
             disk_size_gb=self.disk_size_gb,
             worker_disk_type="compute.googleapis.com/projects/leap-pangeo/zones/us-central1/diskTypes/pd-ssd",
             temp_location=self.temp_gcs_location,
